@@ -28,8 +28,9 @@ class DocumentTest extends TestCase
         //create a file from local disk
         $exampleFile = new File('C:\Users\Délégués\Desktop\git-logo.jpg');
         //copy that file to projectroot/storage/app/public/uploads-unittest folder
+        
         Storage::putFileAs('/uploads-unittest', $exampleFile, 'test-picture.jpg');
-
+        
         //check whether file exists in path
         Storage::assertExists('/uploads-unittest/test-picture.jpg');
        

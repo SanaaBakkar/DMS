@@ -4,7 +4,7 @@
 
 <div class="container">
 
- <div class="row" style="margin-top: 150px">
+ <div class="row" style="margin-top: 60px">
  	<div class="col-md-4">
     		    <div class="card profile-card-3">
     		        <div class="background-block">
@@ -15,7 +15,7 @@
     		        </div>
     		        <div class="card-content">
                     <h2>{{Auth::user()->name}}</h2>
-               <?php $role = App\Role::find(Auth::user()->role_id)->first() ?>
+               <?php $role = App\Role::find(Auth::user()->role_id); ?>
                     	<small>{{$role->name}}</small>
                <?php $department = App\Departement::find(Auth::user()->departement_id);?>
                     <p><b>Department:</b> {{$department->name}} </p>

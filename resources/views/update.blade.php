@@ -21,7 +21,7 @@
           </div>
               <div class="form-group">
               <label >Status</label>
-              <select name="status" class="form-control" style="width: 20%">
+              <select name="status" style="width: 20%">
               	<option value="Not yet started"> Choose a status </option>
               	<option value="In progress"> In progress </option>
               	<option value="Cancelled"> Cancelled </option>

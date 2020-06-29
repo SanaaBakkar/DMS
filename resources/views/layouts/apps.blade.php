@@ -4,7 +4,7 @@
     <title>Document Management System</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+  
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -46,6 +46,7 @@
     }
     //-->
     </SCRIPT>
+   
 
   </head>
   <body>
@@ -82,7 +83,7 @@
 	          <li id="home" class="nav-item" ><a href="{{url('/')}}" class="nav-link">Home</a></li>
 	          <li class="nav-item"><a id="my_doc" href="{{ url('/document') }}" class="nav-link">My documents</a></li>
 	          <li class="nav-item"><a id="tasks" href="{{ url('/task') }}" class="nav-link">My Tasks</a></li>
-	          <li class="nav-item"><a href="project.html" class="nav-link">Team</a></li>
+	          <li class="nav-item"><a href="{{url('/categories')}}" class="nav-link">Categories</a></li>
 	          <li class="nav-item"><a href="{{ url('/documentation') }}" class="nav-link">Documentation</a></li>
             <li class="nav-item">
                     @if(Auth::user()->admin == 1)
@@ -92,7 +93,7 @@
           <ul class="navbar-nav">
            <li class="nav-item dropdown">
                   <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" >
-                      {{ Auth::user()->name }} <span class="caret"></span>
+                      {{ Auth::user()->name }} 
                  </a>
 
                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

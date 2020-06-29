@@ -35,6 +35,7 @@ Route::get('/', 'HomeController@home');
 
 Route::get('admin', 'HomeController@admin')->middleware('admin');
 Route::get('documentation', 'HomeController@documentation');
+Route::get('categories', 'HomeController@categories');
 
  
 /*Route::get('/upload','DocumentController@viewaDocuments');

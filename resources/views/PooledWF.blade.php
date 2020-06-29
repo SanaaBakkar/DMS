@@ -95,11 +95,11 @@
               <div class="row">
                     <div class="col">
                      <label for="start"><i style="font-size:24px" class="fa">&#xf073;&nbsp;</i>Due:</label>
-                       <input type="date" class="form-control" id="Date" name="Date" placeholder="MM-DD-YY" min="<?php echo date('Y-m-d') ?>" style="width: 35%">
+                       <input type="date" id="Date" name="Date" placeholder="MM-DD-YY" min="<?php echo date('Y-m-d') ?>" style="width: 35%">
                  </div>
                     <div class="col">
                Priority:
-              <select name="priority" class="form-control" style="width: 30%">
+              <select name="priority" style="width: 30%">
                         <option value="low">Low</option>
                         <option value="medium">Medium</option>
                         <option value="high">High</option>

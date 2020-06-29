@@ -16,15 +16,14 @@ class CreateEdocumentsTable extends Migration
         Schema::create('edocuments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('doc_name');
-           // $table->string('doc_keyword')->nullable();
-          //  $table->string('doc_owner')->nullable();
             $table->string('doc_prepared_by')->nullable();
             $table->string('doc_reviewed_by')->nullable();
             $table->string('doc_approved_by')->nullable();
             $table->string('doc_description')->nullable();
-            //$table->date('doc_sign_date')->nullable();
-           // $table->unsignedInteger('doc_nbr_page')->nullable();
             $table->string('doc_status')->nullable();/*contient status */
+            $table->string('authorized_users')->nullable();               
+            $table->unsignedInteger('category_id')->nullable()->index();
+            $table->foreign('category_id')->references('id')->on('categories');            
             $table->unsignedInteger('typdoc_id')->nullable()->index();
             $table->foreign('typdoc_id')->references('id')->on('etypdocs');
             $table->timestamps();
@@ -32,6 +31,8 @@ class CreateEdocumentsTable extends Migration
 
         });
     }
+
+
 
     /**
      * Reverse the migrations.

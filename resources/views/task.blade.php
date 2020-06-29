@@ -1,7 +1,7 @@
 @extends('layouts.apps')
 @section('content')
 
-<div class="row" style=" margin: 0 10px; border-style: groove;">
+<div class="row" style=" margin: 10px 10px; border-style: groove; border-radius: 16px;">
   <div class="col-sm-2">
   <h6 class="dropdown-header">My tasks</h6>
   <input class="dropdown-item" type="button" id="Active" value="Active" onclick="ShowHide(this.value)">

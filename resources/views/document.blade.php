@@ -40,22 +40,44 @@
 
 <!---Table of documents  --->      
 <form>
-<div style="margin: 10px 10px; border-style: groove; ">
+<div style="margin: 10px 10px; border-style: groove; border-radius: 8px; ">
    <div class="row">
+      
+     <div class="col-6 col-md-4">
+        <h4 class="dropdown-header"><b>Documents</b></h4>
+     
+        <a href="{{url('listdocuments')}}" ><img height="25px" src="/img/all_files.png"/>All Documents</a><br>
+        <a href="{{url('document')}}" style="margin-left:0.2em"><i class="fa fa-file" style="color: black"></i>&nbsp; My Documents</a><br>
+         @if($role->name=='Contributor' or $role->name=='Collaborator' or $role->name=='Coordinator')      
+         <a id ="add_doc" href=" {{url('upload')}}" style="margin-left:0.2em"><i class="fa fa-plus" style="color: black" aria-hidden="true"></i>&nbsp; Add document</a><br>
+       @endif   
+         <a href="{{url('my_favorites')}}" style="margin-left:0.2em"><i class="fa fa-heart"style="color: black"></i>&nbsp; Favorite</a> 
 
-     <div class="col-6 col-md-2">
-        <h5>Documents</h5>
-        <a href="{{url('listdocuments')}}" style="margin-left:1em">All Documents</a><br>
-        <a href="{{url('document')}}" style="margin-left:1em">My Documents</a><br>
-        <a href="#" style="margin-left:1em">I'm Editing</a><br>
-        <a href="{{url('my_favorites')}}" style="margin-left:1em">Favorite</a> 
+     <ul id="myUL">
+      <li><span class="caret">Categories</span>
+        <ul class="nested">
+          @foreach($categories as $category)
+           
+             <li> <span class="caret">{{$category->name}}</span>
+
+              <?php $docs_of_categ = App\Edocument::where('category_id',$category->id)->get(); ?>
+
+                  <ul class="nested">
+                    @foreach($docs_of_categ as $doc_categ)
+                     <li><a href="detail/{{$doc_categ->id}}"> {{$doc_categ->doc_name}} </a></li>
+                    @endforeach
+                  </ul>
+             </li>
+      @endforeach
+
+        </ul>
+      </li>
+    </ul>
      </div>
 
      <div class="col-12 col-md-8">
-       @if($role->name=='Contributor' or $role->name=='Collaborator' or $role->name=='Coordinator')      
-         <a class="list-group-item" id ="add_doc" href=" {{url('upload')}}"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp; Add New document</a>
-       @endif
-        <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" style="margin: 0px 0px 0px 30px">
+
+        <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0">
           <thead>
             <tr>
               <th>
@@ -93,8 +115,11 @@
 
                      @endisset
                      <!-- End of Date Display --> 
+                    <?php $category = App\Category::find($document->category_id); ?>
 
-                      {{$document->doc_description}}<br>
+                      Category: {{$category->name}}<br>
+
+                      Description: {{$document->doc_description}}<br>
 
           <!-- Testing if the document belong to the favorites --> 
           <?php $favorite= App\Favorite::where('document_id',$document->id)->first(); ?>
@@ -150,6 +175,18 @@
   $('.dataTables_length').addClass('bs-select');
 });
 
+ var toggler = document.getElementsByClassName("caret");
+var i;
+
+for (i = 0; i < toggler.length; i++) {
+  toggler[i].addEventListener("click", function() {
+    this.parentElement.querySelector(".nested").classList.toggle("active");
+    this.classList.toggle("caret-down");
+  });
+}
+
 </script>
+
+ 
 
 @endsection

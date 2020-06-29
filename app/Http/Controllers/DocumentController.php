@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use File;
+use Illuminate\Support\Str;
+
 
 use App\EDocument;
 use App\Etypdoc;
@@ -32,9 +34,13 @@ class DocumentController extends Controller
  
    public function AllDocuments()
    {
-      $alldocs = Edocument::where('doc_status','not like','Completed')->where('doc_status','not like','Done')->get(); 
+     /* $alldocs = Edocument::where('doc_status','not like','Completed')->where('doc_status','not like','Done')->get(); */
+      $alldocs = Edocument::where(function($query) {
+            $query->where('doc_status', 'not like', 'Completed')
+                ->orWhere('doc_status', 'not like', 'Done'); })
+                ->Where('authorized_users','like','%'.Auth::user()->name.',%')
+                ->orWhere('doc_prepared_by',Auth::user()->name)->get();
       $role = Role::find(Auth::user()->role_id);
-
    	  return view('/alldocuments',compact('alldocs','role'));
 
    }
@@ -45,8 +51,9 @@ class DocumentController extends Controller
 
 	  $documents = Edocument::where('doc_prepared_by',Auth::User()->name)->get();   
 	  $role = Role::find(Auth::user()->role_id);
+    $categories = DB::table('categories')->get();
 
-	  return view('/document',['documents'=>$documents],['role'=>$role]);
+	  return view('/document',compact('documents','role','categories'));
 	
    }
 
@@ -54,11 +61,13 @@ class DocumentController extends Controller
    public function create()
 
     {
-        return view('adddocument');
+        $categories= DB::table('categories')->orderBy('name')->get();
+        $Users = DB::table('users')->where('name','not like',Auth::User()->name)->get();
+        return view('adddocument',compact('categories','Users'));
     }
 
     
-    /**
+    /** 
        Upload document
      */
 
@@ -66,19 +75,32 @@ class DocumentController extends Controller
 
         $request->validate([
             'fileToUpload' => 'required|file|max:1024',
+            'categorie' => 'required'
         ]);
+        $id_authorized_users = $request->input('id_user');
+        $names ="";
+             foreach ($id_authorized_users as $id_authorized_user) {
+               $user =User::find($id_authorized_user);               
+               $names .= $user->name.',';               
+             }
 
         $name = $request->file('fileToUpload')->getClientOriginalName();
         $extension = $request->file('fileToUpload')->getClientOriginalExtension();
-       
+
+
 
         $request->file('fileToUpload')->storeAs('files',date("dmY").'_'.$name);
    
+       
+
         $file= new Edocument();
+
         $file->doc_name=date("dmY").'_'.$name;
         $file->doc_prepared_by = Auth::user()->name;
         $file->doc_status='Not yet started';
+        $file->authorized_users = $names;
 
+ 
         if (!empty($_POST['description'])) 
         {
               $file->doc_description=$_POST['description'];
@@ -91,6 +113,11 @@ class DocumentController extends Controller
   /*get the id of the type from etypdoc table and store it into document table*/
         $type = DB::table('etypdocs')->where('extension', strtoupper($extension))->first();
         $file->typdoc_id = $type->id;
+
+ /*Get the Id of categorie choosen  */  
+       $file->category_id = $request->input('categorie');
+
+ /*Save document informations */      
         $file->save();
 
         return back()->with('success','You have successfully upload file.');

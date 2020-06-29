@@ -40,6 +40,13 @@ class HomeController extends Controller
     {
         return view('documentation');
     }
+
+    public function categories()
+    {
+        $categories = DB::table("categories")->get();
+        return view('categories',compact('categories'));
+    }
+
     public function index()
     {
       

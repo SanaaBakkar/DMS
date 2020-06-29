@@ -15,28 +15,38 @@
  
 <?php   $file=Storage::disk('public')->path('public/files/'.$documents->doc_name); ?>
 
+<div class="row">
+   <div class="col-md-8">
+      <iframe src="/visualize/{{$documents->id}}" width="740px" height="600px" ></iframe>
 
-  <table align="right" width=20%>
+   </div>
+
+   <div class="col-md-4">
+    <table align="right">
+    
+      <tr>
+          <td ><a class="list-group-item" href="/update/{{$documents->id}}" id="edit_doc"><i class="far fa-edit"></i>&nbsp;&nbsp;Edit Proprieties</a> </td>   
+      </tr>
+      <tr>
+          <td ><a class="list-group-item" href="/visualize/{{$documents->id}}"><i class="far fa-edit"></i>&nbsp;&nbsp;View document </a> </td>   
+      </tr>
+      <tr>
+        @if($documents->doc_status=='Not yet started')
+         <td ><a class="list-group-item" href="/workflow/{{$documents->id}}"><i class="fas fa-sitemap" id="start_wf"></i>&nbsp;&nbsp;Start workflow</a> </td> 
+        @else
+         <td ><a class="list-group-item" href="/viewworkflow/{{$documents->id}}"><i class="fas fa-sitemap"></i>&nbsp;&nbsp;View workflow</a> </td> 
+        @endif
+
+      </tr>
+    </table>  
+     
+   </div>
+
+</div>
+ 
+
   
-  	<tr>
-      	<td ><a class="list-group-item" href="/update/{{$documents->id}}" id="edit_doc"><i class="far fa-edit"></i>&nbsp;&nbsp;Edit Proprieties</a> </td> 	
-  	</tr>
-    <tr>
-        <td ><a class="list-group-item" href="/visualize/{{$documents->id}}"><i class="far fa-edit"></i>&nbsp;&nbsp;View doc </a> </td>   
-    </tr>
-    <tr>
-      @if($documents->doc_status=='Not yet started')
-	     <td ><a class="list-group-item" href="/workflow/{{$documents->id}}"><i class="fas fa-sitemap" id="start_wf"></i>&nbsp;&nbsp;Start workflow</a> </td> 
-      @else
-       <td ><a class="list-group-item" href="/viewworkflow/{{$documents->id}}"><i class="fas fa-sitemap"></i>&nbsp;&nbsp;View workflow</a> </td> 
-      @endif
-
-	  </tr>
-  </table>  
-
-  <iframe src="/visualize/{{$documents->id}}" width="850px" height="600px" ></iframe>
-
-
+ 
 </form>
 </div>
 

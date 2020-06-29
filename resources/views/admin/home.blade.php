@@ -7,10 +7,10 @@
 				<div class="alert alert-dark" role="alert">
                    <b> Welcome  {{Auth::user()->name}}  </b>
                 </div>
-</div>
+
 
     
-	  <div class="col-sm-6 col-lg-3" >
+	      <div class="col-sm-6 col-lg-3" >
                 <div class="card text-black bg-flat-color-1">
                     <div class="card-body pb-0">
                         <p class="text-light"><a href="{{url('/users')}}" style="color: black"><b>List of users</b></a></p>
@@ -21,7 +21,7 @@
                     </div>
 
                 </div>
-            </div>
+          </div>
 
             <!--/.col-->
 
@@ -66,7 +66,10 @@
                 </div>
             </div>
             <!--/.col-->
+    </div>
 
+    <div class="col-sm-12">
+   
             <div class="col-sm-6 col-lg-3">
                 <div class="card text-white bg-flat-color-3">
                     <div class="card-body pb-0">
@@ -120,7 +123,7 @@
                 </div>
             </div>
 
- 
+ </div>
 
     
 @endsection
